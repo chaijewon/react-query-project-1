@@ -77,12 +77,12 @@ function RecipeList(){
                         data.data.fList && data.data.fList.map((recipe, index) =>
                             <div className="col-md-3" key={index}>
                                 <div className="thumbnail">
-                                    <a href="#">
+                                    <Link to={"/recipe/detail/"+recipe.no}>
                                         <img src={recipe.poster}  style={{"width":"230px","height":"130px"}} />
                                         <div className="caption">
                                             <p>{recipe.title}</p>
                                         </div>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         )
