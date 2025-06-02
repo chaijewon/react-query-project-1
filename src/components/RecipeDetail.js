@@ -11,6 +11,7 @@ import apiClient from "../http-commons";
 function RecipeDetail(){
     const {no}= useParams();
     const nav=useNavigate();
+
     /*
         화면 이동
         nav("/recipe/list")
@@ -34,9 +35,10 @@ function RecipeDetail(){
         <div className="container">
             <div className="row">
                 <table className="table">
+                    <tbody>
                     <tr>
                         <td className="text-center" colSpan={"3"}>
-                            <img src={data.data.vo.poster} style={{"width": "800px","height": "300px"}}/>
+                            <img src={data.data.vo.poster} style={{"width": "800px","height": "300px"}} className={"img-rounded"}/>
                         </td>
                     </tr>
                     <tr>
@@ -65,13 +67,78 @@ function RecipeDetail(){
                         <td className="text-center">{data.data.vo.info2}</td>
                         <td className="text-center">{data.data.vo.info3}</td>
                     </tr>
+                    </tbody>
                 </table>
                 <table className="table">
+                    <tbody>
                     <tr>
                         <td>
                             <h3>[재료]</h3>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                {
+                                    data.data.dList &&
+                                      data.data.dList.map((dd,index) =>
+                                         <li key={index}>{dd}</li>
+                                      )
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table className="table">
+                    <tbody>
+                      <tr>
+                          <td colSpan={"2"}>
+                              <h3>[조리방법]</h3>
+                          </td>
+                      </tr>
+                      {
+                          data.data.mList &&
+                            data.data.mList.map((fm,index) =>
+                                <tr key={index}>
+                                    <td className="text-left" width={"80%"}>
+                                        {fm}
+                                    </td>
+                                    <td className={"text-right"} width={"20%"}>
+                                        <img src={data.data.iList[index]} style={{"width": "100px","height": "80px"}}/>
+                                    </td>
+                                </tr>
+                            )
+                      }
+                    </tbody>
+                </table>
+                <table className="table">
+                    <tbody>
+                      <tr>
+                          <td rowSpan={"2"} width={"15%"}>
+                              <img src={data.data.vo.chef_poster}
+                                   style={{"width": "150px","height": "100px"}}/>
+                          </td>
+                          <td width={"85%"}>
+                              {data.data.vo.chef}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td width={"85%"}>{data.data.vo.chef_profile}</td>
+                      </tr>
+                    </tbody>
+                </table>
+                <table className="table">
+                    <tbody>
+                    <tr>
+                        <td className={"text-right"}>
+                            <button className={"btn-sm btn-primary"}
+                                    onClick={()=>nav(-1)}>
+                                목록
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
