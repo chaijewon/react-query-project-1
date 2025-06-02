@@ -2,6 +2,7 @@ import {useParams,useNavigate,redirect} from "react-router-dom";
 import {useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import apiClient from "../http-commons";
+import FindComponent from "./FindComponent";
 
 /*
     useQuery => SELECT
@@ -33,6 +34,7 @@ function RecipeDetail(){
     return (
         data.data.vo &&
         <div className="container">
+            <FindComponent/>
             <div className="row">
                 <table className="table">
                     <tbody>

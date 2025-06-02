@@ -2,6 +2,9 @@ import {Fragment,useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {Link} from "react-router-dom";
 import apiClient from "../http-commons";
+import FindComponent from "./FindComponent";
+import ListImage from "./ListImage";
+import PagePrint from "./PagePrint";
 /*
     React / Vue => 데이터 관리
     TanStack-Query(5) =>
@@ -20,6 +23,9 @@ import apiClient from "../http-commons";
      },[]);
      => queryKey: [curpage]
         queryFn:
+     => 중복 제거
+        -------- 재사용 : 컴포넌트
+                 컴포넌트 기반의 Front
  */
 function RecipeList(){
     const [curpage,setCurpage] = useState(1);
@@ -33,7 +39,7 @@ function RecipeList(){
     if(isLoading)
         return <h1 className={"text-center"}>Loading...</h1>
     // 확인
-    console.log(data && data)
+    /*console.log(data && data)
     let totalpage=data.data.totalpage;
     let startPage=data.data.startPage;
     let endPage=data.data.endPage;
@@ -66,32 +72,23 @@ function RecipeList(){
     {
         pageArr.push(<li><a href={"#"} className={"nav-link"} onClick={next}>&gt;</a></li>)
     }
-
+   */
     // refetch
 
     return (
+
         <Fragment>
             <div className={"container"}>
-                <div className={"row"}>
+                <FindComponent/>
+                <div className={"row"} style={{"marginTop":"20px"}}>
                     {
                         data.data.fList && data.data.fList.map((recipe, index) =>
-                            <div className="col-md-3" key={index}>
-                                <div className="thumbnail">
-                                    <Link to={"/recipe/detail/"+recipe.no}>
-                                        <img src={recipe.poster}  style={{"width":"230px","height":"130px"}} />
-                                        <div className="caption">
-                                            <p>{recipe.title}</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
+                            <ListImage recipe={recipe} index={index}/>
                         )
                     }
                 </div>
                 <div className={"row text-center"} style={{"marginTop":"10px"}}>
-                    <ul className={"pagination"}>
-                        {pageArr}
-                    </ul>
+                   <PagePrint data={data.data} setCurpage={setCurpage}/>
                 </div>
             </div>
         </Fragment>
